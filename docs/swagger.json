@@ -52,6 +52,9 @@
     "definitions": {
         "controllers.Demo": {
             "type": "object",
+            "required": [
+                "name"
+            ],
             "properties": {
                 "id": {
                     "description": "编号",
@@ -59,7 +62,7 @@
                     "example": 1
                 },
                 "name": {
-                    "description": "名称",
+                    "description": "自定义验证,见 validator.DemoValidator DemoName",
                     "type": "string",
                     "example": "jif"
                 }

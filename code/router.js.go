@@ -1,11 +1,13 @@
 package code
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 	"log"
 	"mlz/code/controllers"
+	_ "mlz/code/validator"
 	"mlz/conf"
 	"net/http"
 	_ "net/http/pprof"
@@ -14,6 +16,34 @@ import (
 
 func InitRouters() {
 	router := gin.Default()
+
+
+	// LoggerWithFormatter 中间件会将日志写入 gin.DefaultWriter
+	// By default gin.DefaultWriter = os.Stdout
+	router.Use(gin.LoggerWithFormatter(func(param gin.LogFormatterParams) string {
+
+		// 你的自定义格式
+		return fmt.Sprintf("%s - [%s] \"%s %s %s %d %s \"%s\" %s\"\n",
+			param.ClientIP,
+			//这里一个坑,golang的日期格式化,必须是这个串... 见 https://www.jianshu.com/p/c7f7fbb16932
+			param.TimeStamp.Format("2006-01-02 15:04:05.000"),
+			param.Method,
+			param.Path,
+			param.Request.Proto,
+			param.StatusCode,
+			param.Latency,
+			param.Request.UserAgent(),
+			param.ErrorMessage,
+		)
+	}))
+
+
+
+
+
+
+
+
 	c:= controllers.DemoController{}
 
 	if conf.AppConfigObject.RunMode=="dev"{

@@ -7,6 +7,7 @@ import (
 
 const SuccessCode string ="0000"
 const FailCode string = "5000"
+const FailCode_Validate string = "5001"
 
 
 // 标准返回值模板
@@ -88,5 +89,17 @@ func FailData(message string,data interface{})  *ResultTemplate{
 		Message:message,
 		Success:false,
 		Data: data,
+	}
+}
+
+
+//  传递message和data
+func FailValidate(message string)  *ResultTemplate{
+
+	return &ResultTemplate{
+		Code: FailCode_Validate,
+		Message: message,
+		Success:false,
+		Data: nil,
 	}
 }

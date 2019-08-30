@@ -2,12 +2,14 @@ package main
 
 import (
 	"encoding/json"
+	"github.com/gin-gonic/gin"
 	"github.com/sipt/GoJsoner"
+	"io"
 	"io/ioutil"
 	"mlz/code"
 	"mlz/conf"
 	_ "mlz/docs" //初始化swagger
-
+	"os"
 )
 
 
@@ -44,6 +46,19 @@ func main() {
 	if err!=nil {
 		panic("配置文件解析错误: "+err.Error())
 	}
+
+
+	// 创建记录日志的文件
+	f, _ := os.Create(conf.AppConfigObject.LogFile)
+	//gin.DefaultWriter = io.MultiWriter(f)
+
+	// 如果需要将日志同时写入文件和控制台，请使用以下代码
+	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
+
+
+
+
+
 	//初始化路由设置,并启动服务
 	code.InitRouters()
 

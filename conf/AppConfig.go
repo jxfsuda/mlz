@@ -15,6 +15,7 @@ type AppConfig struct{
 	Name string `json:"name" description:"应用名称"`
 	RunMode string ``  //只支持dev,不写则为运行环境, dev模式提供 swagger 支持
 	DebugPort int   // 调试端口,查看内存cpu占用,仅支持RunMode = dev 默认7234  http://localhost:7234/debug/pp
+	LogFile string  //日志文件路径,绝对路径
 	WebConfig *WebConfig
 }
 

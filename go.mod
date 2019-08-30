@@ -19,6 +19,7 @@ require (
 	golang.org/x/net v0.0.0-20190827160401-ba9fcec4b297 // indirect
 	golang.org/x/sys v0.0.0-20190826190057-c7b8b68b1456 // indirect
 	golang.org/x/tools v0.0.0-20190828213141-aed303cbaa74 // indirect
+	gopkg.in/go-playground/validator.v8 v8.18.2
 )
 
 replace github.com/swaggo/swag => github.com/jxfsuda/swag v1.6.2

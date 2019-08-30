@@ -9,7 +9,8 @@ import "github.com/gin-gonic/gin"
 
 type Demo struct{
 	Id int `json:"id" example:"1" description:"编号"`
-	Name string `json:"name" example:"jif" description:"名称"`
+	//自定义验证,见 validator.DemoValidator DemoName
+	Name string `json:"name" example:"jif" description:"名称"  binding:"required,DemoName"`
 }
 
 
@@ -32,9 +33,35 @@ func (a *DemoController) Index(c *gin.Context) {
 
 	var json DemoController
 	if err := c.ShouldBindJSON(&json); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, vo.FailValidate(err.Error()))
 		return
 	}
 
 	c.JSON(http.StatusOK, vo.Success(json.Data))
+}
+
+func (a *DemoController) Index1(c *gin.Context) {
+	name := c.Param("name")  //获取路径参数
+	firstname := c.DefaultQuery("firstname", "Guest")  //GET
+	message := c.PostForm("message")
+	nick := c.DefaultPostForm("nick", "anonymous") // 此方法可以设置默认值
+// // 单文件
+	//        file, _ := c.FormFile("file")
+	//        log.Println(file.Filename)
+	//
+	//        // 上传文件到指定的路径
+	//        // c.SaveUploadedFile(file, dst)
+
+
+	// // 多文件
+	//        form, _ := c.MultipartForm()
+	//        files := form.File["upload[]"]
+	//
+	//        for _, file := range files {
+	//            log.Println(file.Filename)
+	//
+	//            // 上传文件到指定的路径
+	//            // c.SaveUploadedFile(file, dst)
+	//        }
+	c.JSON(http.StatusOK, vo.Success(message+nick+name+ firstname))
 }

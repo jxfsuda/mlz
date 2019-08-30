@@ -7,9 +7,11 @@ definitions:
         example: 1
         type: integer
       name:
-        description: 名称
+        description: 自定义验证,见 validator.DemoValidator DemoName
         example: jif
         type: string
+    required:
+    - name
     type: object
   controllers.DemoController:
     properties:
