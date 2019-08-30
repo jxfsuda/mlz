@@ -1,0 +1,49 @@
+basePath: /
+definitions:
+  vo.RequestTemplate:
+    properties:
+      clientType:
+        type: integer
+      sign:
+        type: string
+      timestamp:
+        type: string
+      token:
+        type: string
+    type: object
+host: '{{.Host}}'
+info:
+  contact:
+    email: 35802713@qq.com
+    name: jif
+    url: http://www.swagger.io/support
+  description: Golang API 演示, 主要是促成代码生成和数据库以及缓存使用,编写简单易于开发业务的框架 <br>技术栈:GOLang 1.12
+    ,  GIN , XORM , mysql , redis
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://git.vs9.cn
+  title: Gin API123
+  version: 1.0b125
+paths:
+  /api/v1/demo/index:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: The object content
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/vo.RequestTemplate'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0000,"data":{},"message":"","success":true}'
+          schema:
+            type: string
+      summary: 演示
+swagger: "2.0"

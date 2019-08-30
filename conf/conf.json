@@ -1,0 +1,11 @@
+{
+  // 虽然JSON不支持注释,但是我实在不想看什么yaml toml怪异的语法,搞这么多格式出来干嘛,牛逼吗
+  "name": "GIN 美美哒",
+  "RunMode": "dev",
+  "WebConfig": {
+    "port": 8080
+  }
+
+
+
+}

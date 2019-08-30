@@ -1,0 +1,72 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Golang API 演示, 主要是促成代码生成和数据库以及缓存使用,编写简单易于开发业务的框架 \u003cbr\u003e技术栈:GOLang 1.12 ,  GIN , XORM , mysql , redis",
+        "title": "Gin API123",
+        "termsOfService": "http://git.vs9.cn",
+        "contact": {
+            "name": "jif",
+            "url": "http://www.swagger.io/support",
+            "email": "35802713@qq.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0b125"
+    },
+    "host": "{{.Host}}",
+    "basePath": "/",
+    "paths": {
+        "/api/v1/demo/index": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "演示",
+                "parameters": [
+                    {
+                        "description": "The object content",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/vo.RequestTemplate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":0000,\"data\":{},\"message\":\"\",\"success\":true}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "vo.RequestTemplate": {
+            "type": "object",
+            "properties": {
+                "clientType": {
+                    "type": "integer"
+                },
+                "sign": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
