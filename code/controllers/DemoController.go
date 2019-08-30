@@ -8,15 +8,15 @@ import "github.com/gin-gonic/gin"
 
 
 type Demo struct{
-	Id int `json:"id" example:"1"`
-	Name string `json:"name" example:"jif"`
+	Id int `json:"id" example:"1" description:"编号"`
+	Name string `json:"name" example:"jif" description:"名称"`
 }
 
 
 
 type DemoController struct {
-	*vo.RequestTemplate
-	Data Demo 	`json:"data" Description:"业务数据" "反倒是考虑; "`
+	*vo.RequestTemplate	`description:"继承标准结构"`
+	Data Demo 	`json:"data" description:"业务数据" "反倒是考虑; "`
 }
 
 

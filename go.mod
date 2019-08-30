@@ -20,3 +20,5 @@ require (
 	golang.org/x/sys v0.0.0-20190826190057-c7b8b68b1456 // indirect
 	golang.org/x/tools v0.0.0-20190828213141-aed303cbaa74 // indirect
 )
+
+replace github.com/swaggo/swag => github.com/jxfsuda/swag v1.6.2

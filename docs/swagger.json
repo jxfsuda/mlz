@@ -15,7 +15,6 @@
         },
         "version": "1.0b125"
     },
-    "host": "{{.Host}}",
     "basePath": "/",
     "paths": {
         "/api/v1/demo/index": {
@@ -55,10 +54,12 @@
             "type": "object",
             "properties": {
                 "id": {
+                    "description": "编号",
                     "type": "integer",
                     "example": 1
                 },
                 "name": {
+                    "description": "名称",
                     "type": "string",
                     "example": "jif"
                 }
@@ -68,22 +69,25 @@
             "type": "object",
             "properties": {
                 "clientType": {
+                    "description": "客户端类型 1安卓,2IOS,3WAP,4PC,5微信小程序 6支付宝小程序 7 百度小程序 8 安卓联盟的快应用 9 待定",
                     "type": "integer"
                 },
                 "data": {
+                    "description": "业务数据",
                     "type": "object",
                     "$ref": "#/definitions/controllers.Demo"
                 },
                 "sign": {
+                    "description": "签名,特殊算法后的签名,用于接口非法调用判定",
                     "type": "string"
                 },
                 "timestamp": {
+                    "description": "当前时间戳",
                     "type": "string"
                 },
                 "token": {
                     "type": "string",
-                    "x-abc": "def",
-                    "x-nullable": true
+                    "example": "e10adc3949ba59abbe56e057f20f883e"
                 }
             }
         }

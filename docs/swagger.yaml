@@ -3,29 +3,33 @@ definitions:
   controllers.Demo:
     properties:
       id:
+        description: 编号
         example: 1
         type: integer
       name:
+        description: 名称
         example: jif
         type: string
     type: object
   controllers.DemoController:
     properties:
       clientType:
+        description: 客户端类型 1安卓,2IOS,3WAP,4PC,5微信小程序 6支付宝小程序 7 百度小程序 8 安卓联盟的快应用 9 待定
         type: integer
       data:
         $ref: '#/definitions/controllers.Demo'
+        description: 业务数据
         type: object
       sign:
+        description: 签名,特殊算法后的签名,用于接口非法调用判定
         type: string
       timestamp:
+        description: 当前时间戳
         type: string
       token:
+        example: e10adc3949ba59abbe56e057f20f883e
         type: string
-        x-abc: def
-        x-nullable: true
     type: object
-host: '{{.Host}}'
 info:
   contact:
     email: 35802713@qq.com
