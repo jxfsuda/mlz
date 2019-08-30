@@ -13,22 +13,28 @@ type Demo struct{
 }
 
 
-type DemoController struct{}
+
+type DemoController struct {
+	*vo.RequestTemplate
+	Data Demo 	`json:"data" Description:"业务数据" "反倒是考虑; "`
+}
+
+
 
 
 // @Summary 演示
 // @Produce  json
-// @Param	body	body	vo.RequestTemplate   true        "The object content"
+// @Param	body	body	controllers.DemoController   true        "参数对象,注意,此参数应该被包含在通用参数的data属性内"
 // @Accept json
 // @Success 200 {string} json "{"code":0000,"data":{},"message":"","success":true}"
 // @Router /api/v1/demo/index [post]
 func (a *DemoController) Index(c *gin.Context) {
 
-	var json vo.RequestTemplate
+	var json DemoController
 	if err := c.ShouldBindJSON(&json); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"status": json.Data})
+	c.JSON(http.StatusOK, vo.Success(json.Data))
 }

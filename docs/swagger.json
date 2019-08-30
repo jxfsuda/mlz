@@ -29,13 +29,13 @@
                 "summary": "演示",
                 "parameters": [
                     {
-                        "description": "The object content",
+                        "description": "参数对象,注意,此参数应该被包含在通用参数的data属性内",
                         "name": "body",
                         "in": "body",
                         "required": true,
                         "schema": {
                             "type": "object",
-                            "$ref": "#/definitions/vo.RequestTemplate"
+                            "$ref": "#/definitions/controllers.DemoController"
                         }
                     }
                 ],
@@ -51,11 +51,28 @@
         }
     },
     "definitions": {
-        "vo.RequestTemplate": {
+        "controllers.Demo": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "name": {
+                    "type": "string",
+                    "example": "jif"
+                }
+            }
+        },
+        "controllers.DemoController": {
             "type": "object",
             "properties": {
                 "clientType": {
                     "type": "integer"
+                },
+                "data": {
+                    "type": "object",
+                    "$ref": "#/definitions/controllers.Demo"
                 },
                 "sign": {
                     "type": "string"
@@ -64,7 +81,9 @@
                     "type": "string"
                 },
                 "token": {
-                    "type": "string"
+                    "type": "string",
+                    "x-abc": "def",
+                    "x-nullable": true
                 }
             }
         }

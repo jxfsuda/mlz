@@ -1,4 +1,4 @@
-GIN Project
+GIN Demo
 ------------
 ####Goland 设置
 edit run Configuration

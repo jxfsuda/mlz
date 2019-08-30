@@ -1,5 +1,14 @@
 package vo
 
+import (
+	"github.com/gin-gonic/gin"
+	"log"
+)
+
+const SuccessCode string ="0000"
+const FailCode string = "5000"
+
+
 //@Description 标准返回值模板
 type ResultTemplate struct{
 	Code string `json:"code" example:"0000" description:"返回码,0000表示正常,其他都是一场"`
@@ -10,15 +19,74 @@ type ResultTemplate struct{
 
 //@Description 标准请求模板
 type RequestTemplate struct {
-	Token string `json:"token" description:"请求接口的令牌,一般由登录获取" required:"true" `
-	Timestamp string	`json:"" description:"" required:"true" `
-	ClientType int	`json:"" description:"客户端类型 1安卓,2IOS,3WAP,4PC,5微信小程序 6支付宝小程序 7 百度小程序 8 安卓联盟的快应用 9 待定" required:"true" `
-	Sign string 	`json:"" description:"签名,特殊算法后的签名,用于接口非法调用判定" required:"true" `
+	Token string `json:"token" Description:"请求接口的令牌,一般由登录获取" required:"true"   extensions:"x-nullable,x-abc=def"`
+	Timestamp string	`json:"timestamp" description:"" required:"true" `
+	ClientType int	`json:"clientType" description:"客户端类型 1安卓,2IOS,3WAP,4PC,5微信小程序 6支付宝小程序 7 百度小程序 8 安卓联盟的快应用 9 待定" required:"true" `
+	Sign string 	`json:"sign" description:"签名,特殊算法后的签名,用于接口非法调用判定" required:"true" `
 	Data interface{} `json:"data" swaggertype:"object" example:"{}" description:"可以是数字,字符,对象,数组等标准JSON格式" required:"true" `
 }
 
-ResultTemplate :=ResultTemplate{}
 
-func success(data interface{}){
 
+
+
+
+func Success(data interface{}) map[string]interface{}{
+	return gin.H{
+		"code":    SuccessCode,
+		"message": "",
+		"success": true,
+		"data":    data,
+	}
+
+}
+
+//包含全部参数的Fail
+func Fail(code string,message string,data interface{})  *ResultTemplate{
+	if code== SuccessCode {
+		log.Fatalln("错误代码使用了SuccessCode,请修正");
+		code = FailCode
+	}
+	return &ResultTemplate{
+		Code:code,
+		Message:message,
+		Success:false,
+		Data: data,
+	}
+}
+
+// 只传递code message
+func FailCodeMassage(code string,message string)  *ResultTemplate{
+	if code== SuccessCode {
+		log.Fatalln("错误代码使用了SuccessCode,请修正");
+		code = FailCode
+	}
+	return &ResultTemplate{
+		Code: code,
+		Message:message,
+		Success:false,
+		Data: "",
+	}
+}
+
+//只传递message
+func Fail5000(message string)  *ResultTemplate{
+
+	return &ResultTemplate{
+		Code: FailCode,
+		Message:message,
+		Success:false,
+		Data: "",
+	}
+}
+
+//  传递message和data
+func FailData(message string,data interface{})  *ResultTemplate{
+
+	return &ResultTemplate{
+		Code: FailCode,
+		Message:message,
+		Success:false,
+		Data: data,
+	}
 }

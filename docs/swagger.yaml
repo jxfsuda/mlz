@@ -1,15 +1,29 @@
 basePath: /
 definitions:
-  vo.RequestTemplate:
+  controllers.Demo:
+    properties:
+      id:
+        example: 1
+        type: integer
+      name:
+        example: jif
+        type: string
+    type: object
+  controllers.DemoController:
     properties:
       clientType:
         type: integer
+      data:
+        $ref: '#/definitions/controllers.Demo'
+        type: object
       sign:
         type: string
       timestamp:
         type: string
       token:
         type: string
+        x-abc: def
+        x-nullable: true
     type: object
 host: '{{.Host}}'
 info:
@@ -31,12 +45,12 @@ paths:
       consumes:
       - application/json
       parameters:
-      - description: The object content
+      - description: 参数对象,注意,此参数应该被包含在通用参数的data属性内
         in: body
         name: body
         required: true
         schema:
-          $ref: '#/definitions/vo.RequestTemplate'
+          $ref: '#/definitions/controllers.DemoController'
           type: object
       produces:
       - application/json

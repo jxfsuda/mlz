@@ -2,16 +2,14 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/gin-gonic/gin"
 	"github.com/sipt/GoJsoner"
-	"github.com/swaggo/gin-swagger"
-	"github.com/swaggo/gin-swagger/swaggerFiles"
 	"io/ioutil"
 	"mlz/code"
 	"mlz/conf"
 	_ "mlz/docs" //初始化swagger
-	"strconv"
+
 )
+
 
 // @title Gin API123
 // @version 1.0b125
@@ -28,6 +26,8 @@ import (
 // @ _host localhost
 // @BasePath /
 func main() {
+
+	//初始化配置文件
 	configFile:="conf/conf.json"
 	jsonFile, err := ioutil.ReadFile(configFile)
 	if err!=nil {
@@ -38,48 +38,26 @@ func main() {
 		panic("配置文件解析错误: "+err.Error())
 	}
 
-	appConfig:= conf.AppConfig{}
+	conf.AppConfigObject = conf.AppConfig{}
 
-	err =json.Unmarshal([]byte(jsonStr),&appConfig)
+	err =json.Unmarshal([]byte(jsonStr),&conf.AppConfigObject)
 	if err!=nil {
 		panic("配置文件解析错误: "+err.Error())
 	}
+	//初始化路由设置,并启动服务
+	code.InitRouters()
 
 
 
 
-	r := gin.Default()
-
-	if appConfig.RunMode=="dev"{
-		//home,err:=conf.Home()
-		//  //这样调用,只能下次进入的时候,才能看到最新文档,就当是再运行一次咯,暂时这样
-		//cmd:= exec.Command(home+"/go/bin/swag","init")
-		//err=cmd.Run()
-		//if err!=nil {
-		//	panic("配置文件解析错误: "+err.Error())
-		//}else{
-		//	log.Printf("执行命令swag init 成功")
-		//}
-
-		//注册swagger访问地址   /docs/index.html
-		r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	}else{
-		gin.SetMode(gin.ReleaseMode)
-	}
-
-
-	//随便注册一个主页的路由, 因为是api项目,不展示网页. 前端用VUE即可
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "this is  API HOST",
-		})
-	})
-
-	//初始化路由设置
-	code.InitRouters(r)
 
 
 
 
-	r.Run(":"+ strconv.Itoa(appConfig.WebConfig.Port)) // listen and serve on 0.0.0.0:8080
+
+
+
+
+
+
 }
