@@ -6,9 +6,11 @@ import (
 	"github.com/sipt/GoJsoner"
 	"io"
 	"io/ioutil"
+	"log"
 	"mlz/code"
 	"mlz/conf"
 	_ "mlz/docs" //初始化swagger
+	"mlz/iolib/xorm"
 	"os"
 )
 
@@ -55,8 +57,14 @@ func main() {
 	// 如果需要将日志同时写入文件和控制台，请使用以下代码
 	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
 
+	eng,err:=xorm.NewMysqlEngine(conf.AppConfigObject.DataSource)
+	if err!=nil {
+		panic("数据库连接失败: "+err.Error())
+	}else{
+		log.Println("数据库初始化成功")
+	}
 
-
+	conf.AppConfigObject.Db = eng
 
 
 	//初始化路由设置,并启动服务

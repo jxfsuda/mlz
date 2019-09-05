@@ -1,35 +1,60 @@
 basePath: /
 definitions:
-  controllers.Demo:
+  entity.BaseSetting:
     properties:
       id:
-        description: 编号
-        example: 1
-        type: integer
+        description: 记录id
+        type: string
+      keyer:
+        description: key,代码定义
+        type: string
       name:
-        description: 自定义验证,见 validator.DemoValidator DemoName
-        example: jif
+        description: 设置名称
         type: string
-    required:
-    - name
-    type: object
-  controllers.DemoController:
-    properties:
-      clientType:
-        description: 客户端类型 1安卓,2IOS,3WAP,4PC,5微信小程序 6支付宝小程序 7 百度小程序 8 安卓联盟的快应用 9 待定
+      remark:
+        description: 备注
+        type: string
+      status:
+        description: 状态
         type: integer
-      data:
-        $ref: '#/definitions/controllers.Demo'
-        description: 业务数据
-        type: object
-      sign:
-        description: 签名,特殊算法后的签名,用于接口非法调用判定
+      sys_cdate:
+        description: 创建日期
         type: string
-      timestamp:
-        description: 当前时间戳
+      sys_cuser:
+        description: 创建人
+        type: integer
+      val:
+        description: 设置值
         type: string
-      token:
-        example: e10adc3949ba59abbe56e057f20f883e
+    type: object
+  req.BaseSettingReqVO:
+    properties:
+      ext:
+        description: 这里写扩展
+        type: string
+      id:
+        description: 记录id
+        type: string
+      keyer:
+        description: key,代码定义
+        type: string
+      name:
+        description: 设置名称
+        type: string
+      remark:
+        description: 备注
+        type: string
+      status:
+        description: 状态
+        type: integer
+      sys_cdate:
+        description: 创建日期
+        type: string
+      sys_cuser:
+        description: 创建人
+        type: integer
+      val:
+        description: 设置值
         type: string
     type: object
 info:
@@ -56,7 +81,7 @@ paths:
         name: body
         required: true
         schema:
-          $ref: '#/definitions/controllers.DemoController'
+          $ref: '#/definitions/req.BaseSettingReqVO'
           type: object
       produces:
       - application/json
@@ -66,4 +91,24 @@ paths:
           schema:
             type: string
       summary: 演示
+  /api/v1/demo/index1:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 参数对象,注意,此参数应该被包含在通用参数的data属性内
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/entity.BaseSetting'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0000,"data":{},"message":"","success":true}'
+          schema:
+            type: string
+      summary: 演示1
 swagger: "2.0"

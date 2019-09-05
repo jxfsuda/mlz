@@ -3,6 +3,7 @@ package conf
 import (
 	"bytes"
 	"errors"
+	"mlz/iolib/xorm"
 	"os"
 	"os/exec"
 	"os/user"
@@ -17,6 +18,8 @@ type AppConfig struct{
 	DebugPort int   // 调试端口,查看内存cpu占用,仅支持RunMode = dev 默认7234  http://localhost:7234/debug/pp
 	LogFile string  //日志文件路径,绝对路径
 	WebConfig *WebConfig
+	DataSource string  //数据库连接字符串 golang写法
+	Db *xorm.MysqlEngine  //数据库连接
 }
 
 

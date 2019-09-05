@@ -34,7 +34,38 @@
                         "required": true,
                         "schema": {
                             "type": "object",
-                            "$ref": "#/definitions/controllers.DemoController"
+                            "$ref": "#/definitions/req.BaseSettingReqVO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":0000,\"data\":{},\"message\":\"\",\"success\":true}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/demo/index1": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "演示1",
+                "parameters": [
+                    {
+                        "description": "参数对象,注意,此参数应该被包含在通用参数的data属性内",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/entity.BaseSetting"
                         }
                     }
                 ],
@@ -50,47 +81,81 @@
         }
     },
     "definitions": {
-        "controllers.Demo": {
+        "entity.BaseSetting": {
             "type": "object",
-            "required": [
-                "name"
-            ],
             "properties": {
                 "id": {
-                    "description": "编号",
-                    "type": "integer",
-                    "example": 1
+                    "description": "记录id",
+                    "type": "string"
+                },
+                "keyer": {
+                    "description": "key,代码定义",
+                    "type": "string"
                 },
                 "name": {
-                    "description": "自定义验证,见 validator.DemoValidator DemoName",
-                    "type": "string",
-                    "example": "jif"
+                    "description": "设置名称",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "状态",
+                    "type": "integer"
+                },
+                "sys_cdate": {
+                    "description": "创建日期",
+                    "type": "string"
+                },
+                "sys_cuser": {
+                    "description": "创建人",
+                    "type": "integer"
+                },
+                "val": {
+                    "description": "设置值",
+                    "type": "string"
                 }
             }
         },
-        "controllers.DemoController": {
+        "req.BaseSettingReqVO": {
             "type": "object",
             "properties": {
-                "clientType": {
-                    "description": "客户端类型 1安卓,2IOS,3WAP,4PC,5微信小程序 6支付宝小程序 7 百度小程序 8 安卓联盟的快应用 9 待定",
+                "ext": {
+                    "description": "这里写扩展",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "记录id",
+                    "type": "string"
+                },
+                "keyer": {
+                    "description": "key,代码定义",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "设置名称",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "状态",
                     "type": "integer"
                 },
-                "data": {
-                    "description": "业务数据",
-                    "type": "object",
-                    "$ref": "#/definitions/controllers.Demo"
-                },
-                "sign": {
-                    "description": "签名,特殊算法后的签名,用于接口非法调用判定",
+                "sys_cdate": {
+                    "description": "创建日期",
                     "type": "string"
                 },
-                "timestamp": {
-                    "description": "当前时间戳",
-                    "type": "string"
+                "sys_cuser": {
+                    "description": "创建人",
+                    "type": "integer"
                 },
-                "token": {
-                    "type": "string",
-                    "example": "e10adc3949ba59abbe56e057f20f883e"
+                "val": {
+                    "description": "设置值",
+                    "type": "string"
                 }
             }
         }

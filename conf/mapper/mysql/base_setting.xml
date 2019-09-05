@@ -1,0 +1,29 @@
+<sqlMap>
+    <sql id="selectAllArticle">
+        select id,title,createdatetime,content
+        from Article where id in (?1,?2)
+    </sql>
+    <sql id="selectStudentById1">
+        select * from user where id=?id and 1=1
+    </sql>
+    <sql id="sql_2_1">
+        select id,title,createdatetime,content from Article where id = ?id
+    </sql>
+    <sql id="sql_i_1">
+        INSERT INTO categories VALUES (?id, ?name, ?counts, ?orders, ?pid)
+    </sql>
+    <sql id="sql_i_2">
+        INSERT INTO categories VALUES (?id, ?name, ?counts, ?orders, ?pid)
+    </sql>
+    <sql id="category">
+        select * from category
+    </sql>
+    <sql id="category-16-17">
+        select * from category where id in (16,17)
+    </sql>
+    <sql id="create_1">
+        <![CDATA[
+
+        ]]>
+    </sql>
+</sqlMap>
