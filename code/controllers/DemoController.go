@@ -47,12 +47,12 @@ func (a *DemoController) Index(c *gin.Context) {
 	fmt.Println("")
 
 	setting := new(req.BaseSettingReqVO)
-	conf.AppConfigObject.Db.Engine.Where("id=?",161).Get(setting)
+	_,err=conf.AppConfigObject.Db.Engine.Where("id=?",161).Get(setting)
 json,_:=json.Marshal(setting)
 	fmt.Println("jsondata: " +string(json))
 
-	fmt.Println("")
-	c.JSON(http.StatusOK, vo.Success(json))
+	fmt.Println(err)
+	c.JSON(http.StatusOK, vo.Success(setting))
 }
 
 // @Summary 演示1

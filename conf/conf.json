@@ -4,7 +4,7 @@
   "RunMode": "dev",
   // 调试端口,查看内存cpu占用,仅支持RunMode = dev 默认7234  http://localhost:7234/debug/pp
   "DebugPort": 7234,
-  "dataSource":"root:442503@tcp(111.231.104.83:3306)/scrapy?charset=utf8",
+  "dataSource":"root:442503@tcp(111.231.104.83:3306)/scrapy?charset=utf8&parseTime=true&loc=Local",
   "LogFile": "/logs/gin.log",
   "WebConfig": {
     "port": 9080
