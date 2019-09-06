@@ -3,6 +3,7 @@ module mlz
 go 1.12
 
 require (
+	cloud.google.com/go v0.37.0 // indirect
 	github.com/Chronokeeper/anyxml v0.0.0-20160530174208-54457d8e98c6 // indirect
 	github.com/CloudyKit/fastprinter v0.0.0-20170127035650-74b38d55f37a // indirect
 	github.com/CloudyKit/jet v2.1.2+incompatible // indirect
@@ -10,14 +11,16 @@ require (
 	github.com/agrison/mxj v0.0.0-20160310142625-1269f8afb3b4 // indirect
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/bndr/gotabulate v1.1.2 // indirect
+	github.com/denisenkom/go-mssqldb v0.0.0-20180707235734-242fa5aa1b45 // indirect
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/gin-gonic/gin v1.4.0
 	github.com/go-openapi/spec v0.19.2 // indirect
 	github.com/go-openapi/swag v0.19.5 // indirect
 	github.com/go-sql-driver/mysql v1.4.1
-	github.com/go-xorm/cmd/xorm v0.0.0-20190426080617-f87981e709a1 // indirect
+	github.com/go-xorm/core v0.6.1-0.20181008132326-6bc9412b1c4d // indirect
 	github.com/golang/protobuf v1.3.2 // indirect
 	github.com/json-iterator/go v1.1.7 // indirect
+	github.com/lib/pq v0.0.0-20180523175426-90697d60dd84 // indirect
 	github.com/mailru/easyjson v0.0.0-20190626092158-b2ccc519800e // indirect
 	github.com/mattn/go-isatty v0.0.9 // indirect
 	github.com/sipt/GoJsoner v0.0.0-20170413020122-3e1341522aa6
@@ -32,7 +35,7 @@ require (
 	github.com/ziutek/mymysql v1.5.4 // indirect
 	golang.org/x/net v0.0.0-20190827160401-ba9fcec4b297 // indirect
 	golang.org/x/sys v0.0.0-20190826190057-c7b8b68b1456 // indirect
-	golang.org/x/tools v0.0.0-20190828213141-aed303cbaa74
+	golang.org/x/tools v0.0.0-20190828213141-aed303cbaa74 // indirect
 	google.golang.org/appengine v1.4.0 // indirect
 	gopkg.in/flosch/pongo2.v3 v3.0.0-20141028000813-5e81b817a0c4 // indirect
 	gopkg.in/go-playground/validator.v8 v8.18.2

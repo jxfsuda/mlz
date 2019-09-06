@@ -76,7 +76,24 @@ func main() {
 
 
 
+/**
+打包
+  go get github.com/mitchellh/gox
 
+gox   默认会打包所有平台
+  gox -os="linux"
+  gox -osarch="linux/amd64"
+
+  gox -osarch="darwin/amd64"  -ldflags="-s -w"
+
+   macos 上通过 brew 安装brew install upx
+   upx -9 -o ./mlz ./mlz_darwin_amd64    -9 压缩级别  -o 压缩后的文件名   最后一个参数 要压缩的文件
+
+
+    Mac 下打包 Linux 环境下运行的程序
+  env GOOS=linux GOARCH=386 go build main.go
+
+ */
 
 
 
