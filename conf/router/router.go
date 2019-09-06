@@ -1,4 +1,4 @@
-package code
+package router
 
 import (
 	"fmt"
@@ -6,16 +6,29 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 	"log"
-	"mlz/code/controllers"
 	_ "mlz/code/validator"
 	"mlz/conf"
+	"mlz/iolib/gin_ext"
 	"net/http"
 	_ "net/http/pprof"
 	"strconv"
 )
 
+var router = gin.New()
+
 func InitRouters() {
-	router := gin.Default()
+
+
+	// 全局中间件
+	// 使用 Logger 中间件
+	router.Use(gin.Logger())
+
+	// 使用 Recovery 中间件
+	router.Use(gin_ext.Recovery())
+
+
+
+
 
 
 	// LoggerWithFormatter 中间件会将日志写入 gin.DefaultWriter
@@ -44,7 +57,7 @@ func InitRouters() {
 
 
 
-	c:= controllers.DemoController{}
+
 
 	if conf.AppConfigObject.RunMode=="dev"{
 		//注册swagger访问地址   /docs/index.html
@@ -68,37 +81,10 @@ func InitRouters() {
 		})
 	})
 
-// 接口组 无需授权的接口
-	g:=router.Group("/api")
-	{
-
-		g.POST("/index", func(context *gin.Context) {
-
-			c.Index(context)
-		})
-
-
-	}
-
-
-
-//接口组1  可以添加授权校验的 版本1的接口 , 支持内部继续分组
-	g1:=router.Group("/api/v1")
-	{
-
-		demo:=g1.Group("/demo")
-		{
-
-			demo.POST("/index", func(context *gin.Context) {
-				c.Index(context)
-			})
-		}
-
-
-
-
-	}
-
+	////扩展路由配置 当前文件用于入口处理,以及通用底层配置,其他文件可以一个模块一个文件,避免团队开发冲突
+	// 实际开发中,在这里添加一个方法就表示在同级目录增加一个文件和方法( 每个文件配置一个路径,名称为 router_{module_name} ) ,用于区分和查找
+	route_index()
+	route_demo()
 
 
 

@@ -1,37 +1,7 @@
 basePath: /
 definitions:
-  entity.BaseSetting:
-    properties:
-      id:
-        description: 记录id
-        type: string
-      keyer:
-        description: key,代码定义
-        type: string
-      name:
-        description: 设置名称
-        type: string
-      remark:
-        description: 备注
-        type: string
-      status:
-        description: 状态
-        type: integer
-      sys_cdate:
-        description: 创建日期
-        type: string
-      sys_cuser:
-        description: 创建人
-        type: integer
-      val:
-        description: 设置值
-        type: string
-    type: object
   req.BaseSettingReqVO:
     properties:
-      ext:
-        description: 这里写扩展
-        type: string
       id:
         description: 记录id
         type: string
@@ -46,12 +16,6 @@ definitions:
         type: string
       status:
         description: 状态
-        type: integer
-      sys_cdate:
-        description: 创建日期
-        type: string
-      sys_cuser:
-        description: 创建人
         type: integer
       val:
         description: 设置值
@@ -91,24 +55,4 @@ paths:
           schema:
             type: string
       summary: 演示
-  /api/v1/demo/index1:
-    post:
-      consumes:
-      - application/json
-      parameters:
-      - description: 参数对象,注意,此参数应该被包含在通用参数的data属性内
-        in: body
-        name: body
-        required: true
-        schema:
-          $ref: '#/definitions/entity.BaseSetting'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: '{"code":0000,"data":{},"message":"","success":true}'
-          schema:
-            type: string
-      summary: 演示1
 swagger: "2.0"

@@ -7,8 +7,8 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
-	"mlz/code"
 	"mlz/conf"
+	"mlz/conf/router"
 	_ "mlz/docs" //初始化swagger
 	"mlz/iolib/xorm"
 	"os"
@@ -68,7 +68,7 @@ func main() {
 
 
 	//初始化路由设置,并启动服务
-	code.InitRouters()
+	router.InitRouters()
 
 
 

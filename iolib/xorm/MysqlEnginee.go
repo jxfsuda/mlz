@@ -67,7 +67,8 @@ func initEngineer(engine *xorm.Engine) {
 
 	// xorm  reverse mysql  "root:442503@tcp(111.231.104.83:3306)/scrapy?charset=utf8" /data/go-workspace/mlz/conf/mapper/mysql
 	//注册sql模板  jet 直接写 > < = 而不是 gt lt , 且用 {{if data.count>1 }}  ... {{else}}} ... {{end}} 个人喜好, 都差不多,看的顺眼而已
-	err = engine.RegisterSqlTemplate(xorm.Default("./conf/mapper/mysql", ".jet"))
+	//https://www.kancloud.cn/xormplus/xorm/167081
+	err = engine.RegisterSqlTemplate(xorm.Jet("./conf/mapper/mysql", ".jet"))
 	if err != nil {
 		log.Fatal(err)
 	}
