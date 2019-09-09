@@ -6,8 +6,8 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 	"log"
+	"mlz/code/config"
 	_ "mlz/code/validator"
-	"mlz/conf"
 	"mlz/iolib/gin_ext"
 	"net/http"
 	_ "net/http/pprof"
@@ -26,8 +26,9 @@ func InitRouters() {
 	// 使用 Recovery 中间件
 	router.Use(gin_ext.Recovery())
 
+	router.Delims("{%", "%}")
 
-
+	router.LoadHTMLGlob("conf/templates/*")
 
 
 
@@ -59,14 +60,15 @@ func InitRouters() {
 
 
 
-	if conf.AppConfigObject.RunMode=="dev"{
+	if config.AppConfigObject.RunMode=="dev"{
 		//注册swagger访问地址   /docs/index.html
 		router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 		// 调试模式 ,查看内存占用之类的
-		if conf.AppConfigObject.DebugPort==0 {conf.AppConfigObject.DebugPort=7234}
+		if config.AppConfigObject.DebugPort==0 {
+			config.AppConfigObject.DebugPort=7234}
 		go func() {
-			log.Fatal(http.ListenAndServe("0.0.0.0:"+ strconv.Itoa(conf.AppConfigObject.DebugPort), nil))
+			log.Fatal(http.ListenAndServe("0.0.0.0:"+ strconv.Itoa(config.AppConfigObject.DebugPort), nil))
 		}()
 
 	}else{
@@ -76,9 +78,7 @@ func InitRouters() {
 
 	//随便注册一个主页的路由, 因为是api项目,不展示网页. 前端用VUE即可
 	router.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "this is  API HOST",
-		})
+		c.HTML(200, "index.html", gin.H{"res":""})
 	})
 
 	////扩展路由配置 当前文件用于入口处理,以及通用底层配置,其他文件可以一个模块一个文件,避免团队开发冲突
@@ -90,5 +90,5 @@ func InitRouters() {
 
 
 
-	router.Run(":"+ strconv.Itoa(conf.AppConfigObject.WebConfig.Port)) // listen and serve on 0.0.0.0:8080
+	router.Run(":"+ strconv.Itoa(config.AppConfigObject.WebConfig.Port)) // listen and serve on 0.0.0.0:8080
 }

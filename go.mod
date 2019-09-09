@@ -11,6 +11,8 @@ require (
 	github.com/agrison/mxj v0.0.0-20160310142625-1269f8afb3b4 // indirect
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/bndr/gotabulate v1.1.2 // indirect
+	github.com/clbanning/mxj v1.8.4 // indirect
+	github.com/cockroachdb/apd v1.1.0 // indirect
 	github.com/denisenkom/go-mssqldb v0.0.0-20180707235734-242fa5aa1b45 // indirect
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/gin-gonic/gin v1.4.0
@@ -19,11 +21,15 @@ require (
 	github.com/go-sql-driver/mysql v1.4.1
 	github.com/go-xorm/core v0.6.1-0.20181008132326-6bc9412b1c4d // indirect
 	github.com/golang/protobuf v1.3.2 // indirect
+	github.com/jackc/fake v0.0.0-20150926172116-812a484cc733 // indirect
+	github.com/jackc/pgx v3.5.0+incompatible // indirect
 	github.com/json-iterator/go v1.1.7 // indirect
 	github.com/lib/pq v0.0.0-20180523175426-90697d60dd84 // indirect
 	github.com/mailru/easyjson v0.0.0-20190626092158-b2ccc519800e // indirect
 	github.com/mattn/go-isatty v0.0.9 // indirect
-	github.com/sipt/GoJsoner v0.0.0-20170413020122-3e1341522aa6
+	github.com/mattn/go-sqlite3 v1.11.0 // indirect
+	github.com/satori/go.uuid v1.2.0 // indirect
+	github.com/shopspring/decimal v0.0.0-20190905144223-a36b5d85f337 // indirect
 	github.com/stretchr/testify v1.4.0 // indirect
 	github.com/swaggo/gin-swagger v1.2.0
 	github.com/swaggo/swag v1.6.2

@@ -1,10 +1,13 @@
-package time
+package timeUtils
 
 import "time"
 
 // golang 格式化格式书写,不是yyyy-MM-dd这种写法
 // 到秒的格式
 const Format_LocalDateTimeSecond string = "2006-01-02 15:04:05"
+
+const Format_LocalDateTimeMillionSecond string = "20060102150405"
+
 // 到分的格式
 const Format_LocalDateTimeMinute string = "2006-01-02 15:04"
 //到天的格式

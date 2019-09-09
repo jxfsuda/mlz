@@ -3,13 +3,12 @@ package main
 import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
-	"github.com/sipt/GoJsoner"
 	"io"
 	"io/ioutil"
-	"log"
-	"mlz/conf"
-	"mlz/conf/router"
+	"mlz/code/config"
+	"mlz/code/config/router"
 	_ "mlz/docs" //初始化swagger
+	"mlz/iolib/jsonUtils"
 	"mlz/iolib/xorm"
 	"os"
 )
@@ -37,34 +36,39 @@ func main() {
 	if err!=nil {
 		panic("配置文件未找到,请查看"+configFile)
 	}
-	jsonStr ,err := GoJsoner.Discard(string(jsonFile))
+	jsonStr ,err := jsonUtils.Discard(string(jsonFile))
 	if err!=nil {
 		panic("配置文件解析错误: "+err.Error())
 	}
 
-	conf.AppConfigObject = conf.AppConfig{}
+	config.AppConfigObject = config.AppConfig{}
 
-	err =json.Unmarshal([]byte(jsonStr),&conf.AppConfigObject)
+	err =json.Unmarshal([]byte(jsonStr),&config.AppConfigObject)
 	if err!=nil {
 		panic("配置文件解析错误: "+err.Error())
 	}
 
 
 	// 创建记录日志的文件
-	f, _ := os.Create(conf.AppConfigObject.LogFile)
+	f, _ := os.Create(config.AppConfigObject.LogFile)
 	//gin.DefaultWriter = io.MultiWriter(f)
 
 	// 如果需要将日志同时写入文件和控制台，请使用以下代码
 	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
 
-	eng,err:=xorm.NewMysqlEngine(conf.AppConfigObject.DataSource)
+	eng,err:=xorm.NewMysqlEngine(config.AppConfigObject.DataSource)
 	if err!=nil {
 		panic("数据库连接失败: "+err.Error())
 	}else{
-		log.Println("数据库初始化成功")
+		print("数据库初始化成功\n")
 	}
 
-	conf.AppConfigObject.Db = eng
+	config.AppConfigObject.Db = eng
+
+
+	if config.AppConfigObject.RunMode!="dev"{
+		gin.SetMode(gin.ReleaseMode)
+	}
 
 
 	//初始化路由设置,并启动服务

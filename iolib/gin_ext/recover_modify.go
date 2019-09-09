@@ -87,7 +87,15 @@ func RecoveryWithWriter(out io.Writer) gin.HandlerFunc {
 					}else if ne, ok := err.(error); ok {
 						c.JSON(http.StatusOK, vo.Fail5000(ne.Error()))
 					}else{
-						c.JSON(http.StatusOK, vo.FailData("未知错误",err))
+						if ne, ok := err.(string); ok {
+							c.JSON(http.StatusOK, vo.Fail5000(ne))
+						} else if ne, ok := err.(error); ok {
+							c.JSON(http.StatusOK, vo.Fail5000(ne.Error()))
+						} else {
+							c.JSON(http.StatusOK, vo.FailData("未知错误", err))
+						}
+
+						c.AbortWithStatus(http.StatusOK)
 					}
 
 					c.AbortWithStatus(http.StatusOK)
