@@ -78,7 +78,7 @@ func InitRouters() {
 
 	//随便注册一个主页的路由, 因为是api项目,不展示网页. 前端用VUE即可
 	router.GET("/", func(c *gin.Context) {
-		c.HTML(200, "index.html", gin.H{"res":""})
+		c.HTML(200, "index.html", gin.H{"title":"这个字符串是后端发来的"})
 	})
 
 	////扩展路由配置 当前文件用于入口处理,以及通用底层配置,其他文件可以一个模块一个文件,避免团队开发冲突
