@@ -2,8 +2,10 @@ package Demo
 
 import (
 	"github.com/gin-gonic/gin"
+	"mlz/code/entity"
 	"mlz/code/service/BaseSettingService"
 	vo2 "mlz/iolib/vo"
+	"mlz/iolib/xorm"
 	"net/http"
 )
 
@@ -16,12 +18,12 @@ import (
 func Index(c *gin.Context) {
 
 
-	//var json entity.BaseSetting
+	 var vo = new(entity.BaseSetting)
 	//if err := c.ShouldBindJSON(&json); err != nil {
 	//
 	//	return
 	//}
-	BaseSettingService.GetAll()
+	BaseSettingService.FindByPager(vo,&xorm.Pager{})
 
 	c.JSON(http.StatusOK, vo2.Success(""))
 }
