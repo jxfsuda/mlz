@@ -70,7 +70,7 @@ func  Download(url string,filePath string,fn func(err error)){
 	}
 
 	defer resp.Body.Close()
-	defer fn(err)
+
 	//stat:=resp.Status
 	stat:=resp.StatusCode
 	if stat>=400 {
@@ -97,5 +97,5 @@ func  Download(url string,filePath string,fn func(err error)){
 		panic(err)
 		return
 	}
-
+	defer fn(err)
 }
