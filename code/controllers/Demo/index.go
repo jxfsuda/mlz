@@ -4,8 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"mlz/code/entity"
 	"mlz/code/service/BaseSettingService"
+	"mlz/iolib/mybatis"
 	vo2 "mlz/iolib/vo"
-	"mlz/iolib/xorm"
 	"net/http"
 )
 
@@ -23,7 +23,7 @@ func Index(c *gin.Context) {
 	//
 	//	return
 	//}
-	BaseSettingService.FindByPager(vo,&xorm.Pager{})
+	BaseSettingService.FindByPager(vo,&mybatis.Pager{})
 
 	c.JSON(http.StatusOK, vo2.Success(""))
 }

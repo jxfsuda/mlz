@@ -1,4 +1,4 @@
-package xorm
+package mybatis
 
 // @description 分页参数
 type Pager struct {

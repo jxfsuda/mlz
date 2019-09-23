@@ -5,7 +5,7 @@ package BaseSettingDao
 import (
 	"mlz/code/config"
 	"mlz/code/entity"
-	"mlz/iolib/xorm"
+	"mlz/iolib/mybatis"
 )
 
 const TableName="base_setting"
@@ -14,7 +14,7 @@ const TableName="base_setting"
 
 func  GetAll() (*[]entity.BaseSetting , error){
 	var entities []entity.BaseSetting
-	err := config.AppConfigObject.Db.Engine.SqlMapClient(TableName+"_getAll").Find(&entities)
+	err := config.AppConfigObject.Db.Engine.(TableName+"_getAll").Find(&entities)
 	if err!=nil {
 		return nil , err
 	}

@@ -3,7 +3,7 @@ package vo
 
 
 import (
-	"reflect" 
+	"reflect"
 )
 
 

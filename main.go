@@ -1,15 +1,13 @@
 package main
 
 import (
-	"encoding/json"
 	"github.com/gin-gonic/gin"
+	"github.com/jxfsuda/JsonParser"
 	"io"
-	"io/ioutil"
 	"mlz/code/config"
 	"mlz/code/config/router"
 	_ "mlz/docs" //初始化swagger
-	"mlz/iolib/jsonUtils"
-	"mlz/iolib/xorm"
+	"mlz/iolib/mybatis"
 	"os"
 )
 
@@ -32,18 +30,11 @@ func main() {
 
 	//初始化配置文件
 	configFile:="conf/conf.json"
-	jsonFile, err := ioutil.ReadFile(configFile)
-	if err!=nil {
-		panic("配置文件未找到,请查看"+configFile)
-	}
-	jsonStr ,err := jsonUtils.Discard(string(jsonFile))
-	if err!=nil {
-		panic("配置文件解析错误: "+err.Error())
-	}
+
 
 	config.AppConfigObject = config.AppConfig{}
 
-	err =json.Unmarshal([]byte(jsonStr),&config.AppConfigObject)
+	err :=JsonParser.UnmarshalByJsonFile(configFile,&config.AppConfigObject)
 	if err!=nil {
 		panic("配置文件解析错误: "+err.Error())
 	}
@@ -56,7 +47,7 @@ func main() {
 	// 如果需要将日志同时写入文件和控制台，请使用以下代码
 	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
 
-	eng,err:=xorm.NewMysqlEngine(config.AppConfigObject.DataSource)
+	eng,err:=mybatis.NewMysqlEngine(config.AppConfigObject.DataSource)
 	if err!=nil {
 		panic("数据库连接失败: "+err.Error())
 	}else{

@@ -3,7 +3,7 @@ package config
 import (
 	"bytes"
 	"errors"
-	"mlz/iolib/xorm"
+	"mlz/iolib/mybatis"
 	"os"
 	"os/exec"
 	"os/user"
@@ -19,7 +19,7 @@ type AppConfig struct{
 	LogFile string  //日志文件路径,绝对路径
 	WebConfig *WebConfig
 	DataSource string  //数据库连接字符串 golang写法
-	Db *xorm.MysqlEngine  //数据库连接
+	Db *mybatis.MysqlEngine  //数据库连接
 }
 
 

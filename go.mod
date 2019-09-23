@@ -1,6 +1,6 @@
 module mlz
 
-go 1.12
+go 1.13
 
 require (
 	cloud.google.com/go v0.37.0 // indirect
@@ -24,6 +24,7 @@ require (
 	github.com/jackc/fake v0.0.0-20150926172116-812a484cc733 // indirect
 	github.com/jackc/pgx v3.5.0+incompatible // indirect
 	github.com/json-iterator/go v1.1.7 // indirect
+	github.com/jxfsuda/JsonParser v0.0.0-20190923031202-593c58ad90b4
 	github.com/lib/pq v0.0.0-20180523175426-90697d60dd84 // indirect
 	github.com/mailru/easyjson v0.0.0-20190626092158-b2ccc519800e // indirect
 	github.com/mattn/go-isatty v0.0.9 // indirect
@@ -38,6 +39,7 @@ require (
 	github.com/xormplus/builder v0.0.0-20190724032102-0ee351fedce9 // indirect
 	github.com/xormplus/core v0.0.0-20190724072625-00f5a85ad6e0
 	github.com/xormplus/xorm v0.0.0-20190827105519-9ce119234ab7
+	github.com/zhuxiujia/GoMybatis v5.1.6+incompatible // indirect
 	github.com/ziutek/mymysql v1.5.4 // indirect
 	golang.org/x/net v0.0.0-20190827160401-ba9fcec4b297 // indirect
 	golang.org/x/sys v0.0.0-20190826190057-c7b8b68b1456 // indirect
