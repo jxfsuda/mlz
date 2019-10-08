@@ -1,100 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "https://raw.githubusercontent.com/zhuxiujia/GoMybatis/master/mybatis-3-mapper.dtd">
-<mapper id="BaseSettingMap_base">
-     <resultMap id="BaseSettingMap" tables="base_setting">
-         <id column="id" property="id"/>
-         <result column="name" property="name" langType="string"/>
-         <result column="keyer" property="keyer" langType="string"/>
-         <result column="val" property="val" langType="string"/>
-         <result column="remark" property="remark" langType="string"/>
-         <result column="status" property="status" langType="int"/>
-         <result column="sys_cdate" property="sys_cdate" langType="time.Time"/>
-         <result column="sys_cuser" property="sys_cuser" langType="int"/>
+<sqlMap><!--base_setting的sqlmap 系统设置 -->
 
-<!--         <result column="version" property="version" langType="int"-->
-<!--                 version_enable="true"/>-->
-
-<!--         <result column="delete_flag" property="deleteFlag" langType="int"-->
-<!--                 logic_enable="true"-->
-<!--                 logic_undelete="1"-->
-<!--                 logic_deleted="0"/>-->
-
-     </resultMap>
-
-    <sql id="links"> keyer,val </sql> <!-- 个性 选择字段 用法 select <include refid="links"/> -->
-
-    <select id="selectAll" resultMap="BaseSettingMap"><!-- 这是一个模板性质的查询,真实业务可能有连表,个别字段之类的 -->
-        <bind name="name_pattern" value="'%' + name + '%'"/><!-- bind 标签可以从 govaluate表达式中创建一个变量并将其绑定到上下文 -->
-        <bind name="keyer_pattern" value="'%' + keyer + '%'"/>
-        select * from base_setting
-        <where>
-            <if test="name != null">
-                <!--可以使用bind标签 and name like #{pattern}-->
-                and name like #{pattern}
-            </if>
-            <if test="keyer != nil">
-                keyer like #{keyer_pattern}
-            </if>
-            <if test="status != nil">
-                status = #{status}
-            </if>
-
-        </where>
-        order by sys_cdate desc
-        <if test="page != null and size != null">limit #{page}, #{size}</if>
-    </select>
-
-
-    <update id="updateById">
-        update base_setting
-        <set>
-            <if test="name != null">name = #{name},</if>
-            <if test="keyer != null">keyer = #{keyer},</if>
-            <if test="val != null">val = #{val},</if>
-            <if test="remark != null">remark = #{remark},</if>
-        </set>
-        where id = #{id}
-    </update>
-
-
-
-    <insert id="insert">
-        insert into base_setting
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">id,</if>
-            <if test="name != null">name,</if>
-            <if test="keyer != null">keyer,</if>
-            <if test="val != null">val,</if>
-            <if test="remark != null">remark,</if>
-            <if test="sys_cdate != null">sys_cdate,</if>
-            <if test="sys_cuser != null">sys_cuser,</if>
-        </trim>
-
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">#{id},</if>
-            <if test="name != null">#{name},</if>
-            <if test="keyer != null">#{keyer},</if>
-            <if test="val != null">#{val},</if>
-            <if test="remark != null">#{remark},</if>
-            <if test="sys_cdate != null">#{sys_cdate},</if>
-            <if test="sys_cuser != null">#{sys_cuser},</if>
-        </trim>
-    </insert>
-
-    <update id="deleteById">
-        update base_setting
-        set status = 0
-        where id = #{id}
-    </update>
+    <sql id="base_setting_getById">
+        <![CDATA[ select * from base_setting where id=?id ]]>
+    </sql>
 
 
 
 
-
-
-
-
-
-
-</mapper>
+</sqlMap>

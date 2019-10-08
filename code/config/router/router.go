@@ -1,6 +1,7 @@
 package router
 
 import (
+	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -11,14 +12,19 @@ import (
 	"mlz/iolib/gin_ext"
 	"net/http"
 	_ "net/http/pprof"
+	"os"
+	"os/signal"
 	"strconv"
+	"syscall"
+	"time"
 )
 
 var router = gin.New()
 
 func InitRouters() {
 
-
+	//"github.com/thinkerou/favicon"
+///	router.Use(favicon.New("./favicon.ico"))
 	// 全局中间件
 	// 使用 Logger 中间件
 	router.Use(gin.Logger())
@@ -85,10 +91,40 @@ func InitRouters() {
 	// 实际开发中,在这里添加一个方法就表示在同级目录增加一个文件和方法( 每个文件配置一个路径,名称为 router_{module_name} ) ,用于区分和查找
 	route_index()
 	route_demo()
+	route_su()
+	route_scrapy ()
+
+	server := &http.Server{
+		Addr:           ":"+strconv.Itoa(config.AppConfigObject.WebConfig.Port),
+		Handler:        router,
+		ReadTimeout:    10 * time.Second,
+		WriteTimeout:   10 * time.Second,
+		MaxHeaderBytes: 1 << 20,
+	}
+
+	go server.ListenAndServe()
+
+	// 设置优雅退出
+	gracefulExitWeb(server)
 
 
 
+}
 
+func gracefulExitWeb(server *http.Server) {
+	ch := make(chan os.Signal)
+	signal.Notify(ch, syscall.SIGTERM, syscall.SIGQUIT, syscall.SIGINT)
+	sig := <-ch
 
-	router.Run(":"+ strconv.Itoa(config.AppConfigObject.WebConfig.Port)) // listen and serve on 0.0.0.0:8080
+	fmt.Println("got a signal", sig)
+	now := time.Now()
+	cxt, cancel := context.WithTimeout(context.Background(), 5 * time.Second)
+	defer cancel()
+	err := server.Shutdown(cxt)
+	if err != nil{
+		fmt.Println("err", err)
+	}
+
+	// 看看实际退出所耗费的时间
+	fmt.Println("------exited--------", time.Since(now))
 }

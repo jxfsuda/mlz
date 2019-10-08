@@ -2,12 +2,10 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/jxfsuda/JsonParser"
 	"io"
 	"mlz/code/config"
 	"mlz/code/config/router"
 	_ "mlz/docs" //初始化swagger
-	"mlz/iolib/mybatis"
 	"os"
 )
 
@@ -28,18 +26,6 @@ import (
 // @BasePath /
 func main() {
 
-	//初始化配置文件
-	configFile:="conf/conf.json"
-
-
-	config.AppConfigObject = config.AppConfig{}
-
-	err :=JsonParser.UnmarshalByJsonFile(configFile,&config.AppConfigObject)
-	if err!=nil {
-		panic("配置文件解析错误: "+err.Error())
-	}
-
-
 	// 创建记录日志的文件
 	f, _ := os.Create(config.AppConfigObject.LogFile)
 	//gin.DefaultWriter = io.MultiWriter(f)
@@ -47,14 +33,7 @@ func main() {
 	// 如果需要将日志同时写入文件和控制台，请使用以下代码
 	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
 
-	eng,err:=mybatis.NewMysqlEngine(config.AppConfigObject.DataSource)
-	if err!=nil {
-		panic("数据库连接失败: "+err.Error())
-	}else{
-		print("数据库初始化成功\n")
-	}
 
-	config.AppConfigObject.Db = eng
 
 
 	if config.AppConfigObject.RunMode!="dev"{

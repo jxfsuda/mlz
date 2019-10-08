@@ -1,7 +1,6 @@
 package entity
 
 import (
-	_ "github.com/go-sql-driver/mysql"
 	"mlz/iolib/timeUtils"
 )
 
@@ -18,14 +17,8 @@ type BaseSetting struct {
 }
 
 
-
-type BaseSettingMapper struct {
-	//调用即可生成sql
-	SelectTemplete      func(name string) ([]BaseSetting, error)
-	InsertTemplete      func(arg *BaseSetting) (int64, error)
-	InsertTempleteBatch func(args []BaseSetting) (int64, error) `mapperParams:"args"`
-	//生成sql(带有乐观锁.逻辑删除)  update base_setting set name = #{name},remark=#{remark},version=#{version+1} where delete_flag = 1 and id = #{id} and version = #{version}
-	UpdateTemplete      func(arg BaseSetting) (int64, error) `
-	DeleteTemplete      func(id string) (int64, error)     `mapperParams:"id"`
+// @Description 系统设置 扩展对象的标准基类,只保留业务数据
+type BaseSettingBaseVO struct {
+	Keyer     string                    `xorm:"varchar(50)  'keyer'" description:"key,代码定义" json:"keyer" `
+	Val       string                    `xorm:"varchar(200) not null 'val'" description:"设置值" json:"val" `
 }
-

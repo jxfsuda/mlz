@@ -21,6 +21,11 @@ definitions:
         description: 设置值
         type: string
     type: object
+  req.GetListReq:
+    properties:
+      url:
+        type: string
+    type: object
 info:
   contact:
     email: 35802713@qq.com
@@ -35,7 +40,7 @@ info:
   title: Gin API123
   version: 1.0b125
 paths:
-  /api/v1/demo/index:
+  /api/demo/v1/index:
     post:
       consumes:
       - application/json
@@ -55,4 +60,44 @@ paths:
           schema:
             type: string
       summary: 演示
+  /api/scrapy/entry/process:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 参数对象,注意,此参数应该被包含在通用参数的data属性内
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/req.GetListReq'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0000,"data":{},"message":"","success":true}'
+          schema:
+            type: string
+      summary: 获取目录
+  /api/su/v1/base_setting/GetAll:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 参数对象,注意,此参数应该被包含在通用参数的data属性内
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/req.BaseSettingReqVO'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0000,"data":{},"message":"","success":true}'
+          schema:
+            type: string
+      summary: 列表数据
 swagger: "2.0"
