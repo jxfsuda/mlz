@@ -13,7 +13,7 @@ import (
 // @Param	body	body	req.GetListReq   true        "参数对象,注意,此参数应该被包含在通用参数的data属性内"
 // @Accept json
 // @Success 200 {string} json "{"code":0000,"data":{},"message":"","success":true}"
-// @Router /api/scrapy/entry/process [post]
+// @Router /api/scrapy/entry/GetList [post]
 func GetList(c *gin.Context) {
 
 	req:= &req2.GetListReq{}
@@ -31,7 +31,7 @@ func GetList(c *gin.Context) {
 // @Param	body	body	req.GetListRsp   true        "参数对象,注意,此参数应该被包含在通用参数的data属性内"
 // @Accept json
 // @Success 200 {string} json "{"code":0000,"data":{},"message":"","success":true}"
-// @Router /api/scrapy/entry/process [post]
+// @Router /api/scrapy/entry/GetData [post]
 func GetData(c *gin.Context) {
 
 	req:= &req2.GetListRsp{}

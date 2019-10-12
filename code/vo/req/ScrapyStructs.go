@@ -24,3 +24,8 @@ type DataVo struct{
 	Message string `json:"message"`
 
 }
+
+type TingChinaResult struct{
+	Url string `json:"url"`
+	Status int `json:"status"`
+}

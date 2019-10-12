@@ -2,10 +2,14 @@ package scrapyService
 
 import (
 	"crypto/tls"
+	"errors"
 	"fmt"
 	"github.com/EDDYCJY/fake-useragent"
 	"github.com/kirinlabs/HttpRequest"
 	"golang.org/x/text/encoding/simplifiedchinese"
+	"io/ioutil"
+	"log"
+	"os"
 	"regexp"
 	"strconv"
 	"strings"
@@ -13,10 +17,27 @@ import (
 var reged_meta_charset = regexp.MustCompile("<meta .* content=\".* charset=(.*)\".*/>")
 type Charset string
 
+const DEBUG = false
+
 const (
 	UTF8    = Charset("UTF-8")
 	GB18030 = Charset("GB18030")
 )
+
+//中文数字转 阿拉伯数字
+ var Zh_num_2_num = map[string]string{
+	"一":"01",
+	"二":"02",
+	"三":"03",
+	"四":"04",
+	"五":"05",
+	"六":"06",
+	"七":"07",
+	"八":"08",
+	"九":"09",
+	"十":"10",
+}
+
 
 func ConvertByte2String(byte []byte, charset Charset) string {
 
@@ -36,7 +57,7 @@ func ConvertByte2String(byte []byte, charset Charset) string {
 
 func GetHtml(url string,param map[string]interface{}) string{
 
-	req := HttpRequest.NewRequest().Debug(true).DisableKeepAlives(false).SetTimeout(500)
+	req := HttpRequest.NewRequest().Debug(DEBUG).DisableKeepAlives(false).SetTimeout(500)
 	req.SetTLSClient(&tls.Config{InsecureSkipVerify: true})
 	req.SetHeaders(map[string]string{
 		"Content-Type": "application/x-www-form-urlencoded",
@@ -47,6 +68,7 @@ func GetHtml(url string,param map[string]interface{}) string{
 	if err!=nil {
 		panic(err.Error())
 	}
+
 	code:= resp.StatusCode()
 	if code>=400{
 		panic("获取列表错误,服务器响应"+ strconv.Itoa(code))
@@ -79,7 +101,7 @@ func GetHtml(url string,param map[string]interface{}) string{
 
 func PostHtml(url string,param map[string]interface{}) string{
 
-	req := HttpRequest.NewRequest().Debug(true).DisableKeepAlives(false).SetTimeout(500)
+	req := HttpRequest.NewRequest().Debug(DEBUG).DisableKeepAlives(false).SetTimeout(500)
 	req.SetTLSClient(&tls.Config{InsecureSkipVerify: true})
 	req.SetHeaders(map[string]string{
 		"Content-Type": "application/x-www-form-urlencoded",
@@ -107,7 +129,7 @@ func PostHtml(url string,param map[string]interface{}) string{
 
 func PostJson(url string,param map[string]interface{}) string{
 
-	req := HttpRequest.NewRequest().Debug(true).DisableKeepAlives(false).SetTimeout(500)
+	req := HttpRequest.NewRequest().Debug(DEBUG).DisableKeepAlives(false).SetTimeout(500)
 	req.SetTLSClient(&tls.Config{InsecureSkipVerify: true})
 	req.SetHeaders(map[string]string{
 	"Content-Type": "application/json",
@@ -130,4 +152,34 @@ func PostJson(url string,param map[string]interface{}) string{
 
 	return string(body)
 
+}
+
+func Download(url string , filePath string) error{
+	req := HttpRequest.NewRequest().Debug(DEBUG).DisableKeepAlives(false).SetTimeout(500)
+	req.SetTLSClient(&tls.Config{InsecureSkipVerify: true})
+	req.SetHeaders(map[string]string{
+		"Content-Type": "application/x-www-form-urlencoded",
+		"Connection": "keep-alive",
+		"User-Agent":browser.Random(),
+		"Referer":url,
+
+	})
+	resp,err :=req.Get(url,nil)
+	if err!=nil {
+		return err
+	}
+	code:= resp.StatusCode()
+	if code>=400{
+		return  errors.New("获取列表错误,服务器响应"+ strconv.Itoa(code) )
+	}
+
+	body, err := resp.Body()
+	if err != nil {
+		return err
+	}
+	perm, _ := strconv.ParseInt("511", 8, 0)
+	per := os.FileMode(perm)
+	ioutil.WriteFile(filePath, body,per)
+	log.Println("===> 下载操作完成 : ",url,filePath)
+	return nil
 }

@@ -48,7 +48,38 @@
                 }
             }
         },
-        "/api/scrapy/entry/process": {
+        "/api/scrapy/entry/GetData": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "获取数据",
+                "parameters": [
+                    {
+                        "description": "参数对象,注意,此参数应该被包含在通用参数的data属性内",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/req.GetListRsp"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":0000,\"data\":{},\"message\":\"\",\"success\":true}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/scrapy/entry/GetList": {
             "post": {
                 "consumes": [
                     "application/json"
@@ -144,6 +175,37 @@
         "req.GetListReq": {
             "type": "object",
             "properties": {
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "req.GetListRsp": {
+            "type": "object",
+            "properties": {
+                "links": {
+                    "description": "分集链接",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/req.Link"
+                    }
+                },
+                "name": {
+                    "description": "书名",
+                    "type": "string"
+                },
+                "total": {
+                    "description": "总数",
+                    "type": "integer"
+                }
+            }
+        },
+        "req.Link": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
                 "url": {
                     "type": "string"
                 }

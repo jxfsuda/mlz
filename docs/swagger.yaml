@@ -26,6 +26,27 @@ definitions:
       url:
         type: string
     type: object
+  req.GetListRsp:
+    properties:
+      links:
+        description: 分集链接
+        items:
+          $ref: '#/definitions/req.Link'
+        type: array
+      name:
+        description: 书名
+        type: string
+      total:
+        description: 总数
+        type: integer
+    type: object
+  req.Link:
+    properties:
+      title:
+        type: string
+      url:
+        type: string
+    type: object
 info:
   contact:
     email: 35802713@qq.com
@@ -60,7 +81,27 @@ paths:
           schema:
             type: string
       summary: 演示
-  /api/scrapy/entry/process:
+  /api/scrapy/entry/GetData:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 参数对象,注意,此参数应该被包含在通用参数的data属性内
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/req.GetListRsp'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0000,"data":{},"message":"","success":true}'
+          schema:
+            type: string
+      summary: 获取数据
+  /api/scrapy/entry/GetList:
     post:
       consumes:
       - application/json

@@ -33,7 +33,7 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td><span v-if="list_data.name">{{list_data.name}} 共 {{list_data.total}} 集</span></td>
+                    <td><span v-if="list_data.name">{{list_data.name}} 共 {{list_data.total}} 集 <a @click="GetData">开始处理</a></span></td>
                 </tr>
                 <tr v-for="item of list_data.links">
                     <td><span></span><span>{{item.title}}</span> {{item.url}}</td>
@@ -49,7 +49,7 @@
             return {
                 baseurl:"",
                 // 目录url
-                list_url:"http://www.ting56.com/mp3/5257.html",
+                list_url:"http://www.ting56.com/mp3/2952.html",
                 list_data:{},
                 tmp:null,
                 show:true,
@@ -66,13 +66,21 @@
                 if(!u){
                     return;
                 }
-                this.post(this.baseurl+"/api/scrapy/entry/process",{url:this.list_url},function (ret) {
+                this.post(this.baseurl+"/api/scrapy/entry/GetList",{url:this.list_url},function (ret) {
                     self.list_data = ret;
                     console.log(ret)
                 });
 
             },
+            GetData(){
+                var self=this;
+                this.post(this.baseurl+"/api/scrapy/entry/GetData",self.list_data,function(ret){
+                    console.log(ret)
+                },function(err){
+                    console.log(ret)
+                })
 
+            },
 
 
 

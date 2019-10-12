@@ -13,7 +13,9 @@ func route_scrapy (){
 
 		demo:=g1.Group("/entry")
 		{
-			demo.POST("/process", scrapy.GetList)
+			demo.POST("/GetList", scrapy.GetList)
+			demo.POST("/GetData", scrapy.GetData)
+
 		}
 	}
 
