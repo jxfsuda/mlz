@@ -2,24 +2,28 @@ package scrapyService
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"log"
 	"mlz/code/vo/req"
 	"os"
-	"regexp"
-	"strconv"
 	"strings"
 )
 
-
-
-
-var regex_js = regexp.MustCompile("FonHen_JieMa\\('(.*)'\\).split")
-
-func ProcessTing56(url string)  *req.GetListRsp{
+func ProcessTing89(url string)  *req.GetListRsp{
 
 	body:=GetHtml(url,nil)
- 	r:=strings.NewReader(body)
+
+	//var r = regexp.MustCompile("datas=\\(\"(.*)\"\\).split")
+
+	//matchs:=regex.FindStringSubmatch(body)
+	//if len(matchs) <2{
+	//	return nil
+	//}
+	//str:= matchs[1]
+	//log.Fatalln(str)
+
+	r:=strings.NewReader(body)
 	doc,err:=goquery.NewDocumentFromReader(r)
 	if err!=nil {
 		panic(err)
@@ -28,32 +32,37 @@ func ProcessTing56(url string)  *req.GetListRsp{
 		Total:0,
 		Name:"",
 	}
-	name := doc.Find(".content .left .tit h1").Text();
-	 as := doc.Find("#vlink_1 ul li a")
-	len := as.Length()
-	ret.Total = len
-	ret.Name=strings.ReplaceAll(name,"有声小说","")
+	sel:=doc.Find(".numlist").Eq(0)
+	name := sel.Find("h2").Text()
+	name=strings.Replace(name,"有声小说","",-1)
+	name=strings.Replace(name,"在线收听","",-1)
+	ret.Name=name
+	fmt.Println(ret)
+	aLinks:=sel.Find(".compress li a");
+	ret.Total=aLinks.Length()
 
-	links:= make([]req.Link,len)
+	links:= make([]req.Link,aLinks.Length())
 
-	as.Each(func(i int, selection *goquery.Selection) {
+	aLinks.Each(func(i int, selection *goquery.Selection) {
 		t:=strings.TrimSpace(selection.Text())
 		href,_:=selection.Attr("href")
 
 		links[i]= req.Link{
 			Title:t,
-			Url: "http://www.ting56.com"+href ,
+			Url: "http://www.ting89.com"+href ,
 		}
 	})
 	ret.Links = links
+
+
 
 	return ret
 }
 
 
-func ProcessTing56Data(url string,title string,idx int)  *req.GetListRsp{
+func ProcessTing89Data(url string,title string,idx int)  *req.GetListRsp{
 
-	body:=GetHtml(url,nil)
+	body:=PostHtml(url,nil)
 	r:=strings.NewReader(body)
 	doc,err:=goquery.NewDocumentFromReader(r)
 	if err!=nil {
@@ -79,10 +88,10 @@ func ProcessTing56Data(url string,title string,idx int)  *req.GetListRsp{
 		strs:= FonHen_JieMa(str)
 
 		u:=strs[0]
-	//	c:=strs[1]
+		//	c:=strs[1]
 		t:=strs[2]
 		log.Println("--->" + u)
-		filePath:="/data/txt/"+ title+"/"
+		filePath:="/data/txt/"
 		if t=="tc" {
 			// 再次请求
 			splits:=strings.Split(u,"/")
@@ -99,12 +108,9 @@ func ProcessTing56Data(url string,title string,idx int)  *req.GetListRsp{
 		}
 		up:=strings.Split(u,"?")[0]
 		us:=strings.Split(up,"/")
-		ext:= strings.Split(us[len(us)-1],".")[1]
-
-
-		name:= FillZeroString(idx,5)+"."+ext
+		name:= us[len(us)-1]
 		//直接下载
-		file:=filePath+name
+		file:=filePath+title+name
 		fi,err:=os.Stat(file)
 		if err==nil {
 			if fi.Size()>1024{
@@ -121,7 +127,6 @@ func ProcessTing56Data(url string,title string,idx int)  *req.GetListRsp{
 			if err == nil {
 				if fi.Size() < 1024 {
 					os.Remove(file)
-					log.Println("重试下载",file)
 					Download(u, file)
 				}else{
 					return
@@ -132,24 +137,4 @@ func ProcessTing56Data(url string,title string,idx int)  *req.GetListRsp{
 
 
 	return nil
-}
-
-
-func FonHen_JieMa(str string) []string{
-	str=strings.TrimSpace(str)
-	tArr:=strings.Split(str,"*")
-
-	n:=len(tArr)
-
-	x:=""
-
-	for   i:=0;i<n ;i++  {
-		if tArr[i]=="" {
-			continue
-		}
-		nc,_:=strconv.Atoi(tArr[i])
-		x+=string(nc)
-	}
-
-	return strings.Split(x,"&")
 }

@@ -48,6 +48,37 @@
                 }
             }
         },
+        "/api/download/PostRecord": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "获取数据",
+                "parameters": [
+                    {
+                        "description": "参数对象,注意,此参数应该被包含在通用参数的data属性内",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/req.DownloadReqVO"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/req.DownloadReqVO"
+                        }
+                    }
+                }
+            }
+        },
         "/api/scrapy/entry/GetData": {
             "post": {
                 "consumes": [
@@ -168,6 +199,37 @@
                 },
                 "val": {
                     "description": "设置值",
+                    "type": "string"
+                }
+            }
+        },
+        "req.DownloadItem": {
+            "type": "object",
+            "properties": {
+                "desc": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "req.DownloadReqVO": {
+            "type": "object",
+            "properties": {
+                "group_name": {
+                    "type": "string"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/req.DownloadItem"
+                    }
+                },
+                "refer_url": {
                     "type": "string"
                 }
             }

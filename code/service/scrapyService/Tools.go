@@ -10,6 +10,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
@@ -66,6 +67,7 @@ func GetHtml(url string,param map[string]interface{}) string{
 	})
 	resp,err :=req.Get(url,param)
 	if err!=nil {
+		log.Println(err)
 		panic(err.Error())
 	}
 
@@ -177,9 +179,32 @@ func Download(url string , filePath string) error{
 	if err != nil {
 		return err
 	}
+	dir, err := filepath.Abs(filepath.Dir(filePath))
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+	os.MkdirAll(dir, os.ModePerm)
 	perm, _ := strconv.ParseInt("511", 8, 0)
 	per := os.FileMode(perm)
-	ioutil.WriteFile(filePath, body,per)
-	log.Println("===> 下载操作完成 : ",url,filePath)
+	err  = ioutil.WriteFile(filePath, body, per)
+	if err==nil {
+		log.Println("===> 下载操作完成 : ",url,filePath)
+	}else{
+		log.Println("===> 下载操作失败 : ",filePath,err)
+	}
+
 	return nil
 }
+
+
+ func FillZeroString(i int,maxlen int) string{
+ 	s:=strconv.Itoa(i)
+ 	l:=len(s)
+ 	a:= maxlen-l
+
+ 	for d:=0;d<a;d++ {
+ 		s="0"+s
+	}
+ 	return s
+ }

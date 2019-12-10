@@ -24,6 +24,7 @@ type AppConfig struct{
 	WebConfig *WebConfig
 	DataSource string  //数据库连接字符串 golang写法
 	Db *xorm.MysqlEngine  //数据库连接
+	DownLoadRootPath string //下载文件的根目录, 下级目录一般是 {DownLoadRootPath}/书籍名称/001.mp3
 }
 
 type WebConfig struct{

@@ -21,6 +21,26 @@ definitions:
         description: 设置值
         type: string
     type: object
+  req.DownloadItem:
+    properties:
+      desc:
+        type: string
+      title:
+        type: string
+      url:
+        type: string
+    type: object
+  req.DownloadReqVO:
+    properties:
+      group_name:
+        type: string
+      items:
+        items:
+          $ref: '#/definitions/req.DownloadItem'
+        type: array
+      refer_url:
+        type: string
+    type: object
   req.GetListReq:
     properties:
       url:
@@ -81,6 +101,26 @@ paths:
           schema:
             type: string
       summary: 演示
+  /api/download/PostRecord:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 参数对象,注意,此参数应该被包含在通用参数的data属性内
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/req.DownloadReqVO'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/req.DownloadReqVO'
+      summary: 获取数据
   /api/scrapy/entry/GetData:
     post:
       consumes:

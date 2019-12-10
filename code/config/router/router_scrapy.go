@@ -1,6 +1,7 @@
 package router
 
 import (
+	"mlz/code/controllers/download"
 	"mlz/code/controllers/scrapy"
 )
 
@@ -18,5 +19,19 @@ func route_scrapy (){
 
 		}
 	}
+
+
+	g2:= router.Group("/api/download/")
+	{
+
+
+		g2.POST("/PostRecord", download.PostRecord)
+
+
+	}
+
+
+
+
 
 }

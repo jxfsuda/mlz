@@ -3,7 +3,6 @@ package scrapyService
 import (
 	"mlz/code/vo/req"
 	"regexp"
-	"strings"
 	"sync"
 )
 
@@ -11,7 +10,6 @@ var regex = regexp.MustCompile("://([\\w\\.]{1,})/")
 
 var wg sync.WaitGroup
 
-var name_prefix string
 
 // 开始处理
 func Process(reqVO *req.GetListReq) *req.GetListRsp{
@@ -25,6 +23,9 @@ func Process(reqVO *req.GetListReq) *req.GetListRsp{
 		case "www.ting56.com", "ting56.com":
 			return ProcessTing56(book_url)
 			break
+	case "www.ting89.com", "ting89.com":
+		return ProcessTing89(book_url)
+		break
 	default:
 		panic("暂不支持此站点")
 	}
@@ -36,22 +37,11 @@ func Process(reqVO *req.GetListReq) *req.GetListRsp{
 func GetData(reqVO *req.GetListRsp) *req.GetListRsp{
 
 	links := reqVO.Links
-	for _,v:=range links{
-		ps := strings.LastIndex(v.Title,"第")
-
-		p:=v.Title[:ps]
-
-		if p!="" {
-			for key, value := range Zh_num_2_num {
-				p=strings.ReplaceAll(p,key,value)
-			}
-			name_prefix=p
-		}
+	for idx,v:=range links{
 		link:=v.Url
-
-		go func(link string,p string) {
-			GetOneData(link, p)
-		}(link,name_prefix)
+		go func(link string,p string,idx int) {
+			GetOneData(link, p,idx)
+		}(link,reqVO.Name,idx)
 
 	}
 	wg.Wait()
@@ -59,14 +49,17 @@ func GetData(reqVO *req.GetListRsp) *req.GetListRsp{
 }
 
 
-func GetOneData(link string,p string) interface{}{
+func GetOneData(link string,p string, idx int) interface{}{
 	wg.Add(1)
 	defer wg.Done()
 	mts:=regex.FindStringSubmatch(link)
 	var host = mts[1]
 	switch host{
 	case "www.ting56.com", "ting56.com":
-		return ProcessTing56Data(link,p)
+		return ProcessTing56Data(link,p,idx)
+		break
+	case "www.ting89.com", "ting89.com":
+		return ProcessTing89Data(link,p,idx)
 		break
 	default:
 		panic("暂不支持此站点")

@@ -1,7 +1,9 @@
 package httpUtils
 
 import (
+	"errors"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -54,6 +56,14 @@ func GetResponse(url string,fn func(interface{} ,error)){
 //下载文件
 //基于go 1.12.4
 func  Download(url string,filePath string,fn func(err error)){
+	fi, err := os.Stat(filePath)
+	if err==nil {  //文件已经存在
+
+		if fi.Size()>624000 {
+			log.Println("文件已存在,文件大小:",fi.Size()/(1024*1024),"M")
+			return
+		}
+	}
 	client:=NewClient()
 	req, err := http.NewRequest("GET", url,nil)
 	if err != nil {
@@ -74,7 +84,8 @@ func  Download(url string,filePath string,fn func(err error)){
 	//stat:=resp.Status
 	stat:=resp.StatusCode
 	if stat>=400 {
-		panic("下载文件错误,响应码"+resp.Status)
+		log.Println("下载文件错误,响应码"+resp.Status , url)
+		err = errors.New("远程文件未找到"+ url)
 		return
 	}
 	//fmt.Printf("%t,%v",stat,stat)
@@ -82,6 +93,7 @@ func  Download(url string,filePath string,fn func(err error)){
 		panic( err)
 		return
 	}
+
 	_, err  = os.Create(filePath)
 	if err!=nil{
 		panic( err)

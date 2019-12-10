@@ -23,6 +23,8 @@ var router = gin.New()
 
 func InitRouters() {
 
+
+
 	//"github.com/thinkerou/favicon"
 ///	router.Use(favicon.New("./favicon.ico"))
 	// 全局中间件
@@ -31,7 +33,7 @@ func InitRouters() {
 
 	// 使用 Recovery 中间件
 	router.Use(gin_ext.Recovery())
-
+	router.Use(Cors())
 	router.Delims("{%", "%}")
 
 	router.LoadHTMLGlob("conf/templates/*")
@@ -127,4 +129,25 @@ func gracefulExitWeb(server *http.Server) {
 
 	// 看看实际退出所耗费的时间
 	fmt.Println("------exited--------", time.Since(now))
+}
+
+
+func Cors() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		method := c.Request.Method
+
+		c.Header("Access-Control-Allow-Origin", "*")
+		c.Header("Access-Control-Allow-Headers", "Content-Type,AccessToken,X-CSRF-Token, Authorization, Token")
+		c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+		c.Header("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type")
+		c.Header("Access-Control-Allow-Credentials", "true")
+
+		//放行所有OPTIONS方法
+		if method == "OPTIONS" {
+			c.AbortWithStatus(http.StatusNoContent)
+		}
+		// 处理请求
+		c.Next()
+	}
+
 }

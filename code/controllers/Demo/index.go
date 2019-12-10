@@ -31,3 +31,20 @@ func Index(c *gin.Context) {
 	c.JSON(http.StatusOK, vo.Success(res))
 }
 
+
+// @Summary 演示
+// @Produce  json
+// @Param	body	body	req.BaseSettingReqVO   true        "参数对象,注意,此参数应该被包含在通用参数的data属性内"
+// @Accept json
+// @Success 200 {string} json "{"code":0000,"data":{},"message":"","success":true}"
+// @Router /api/demo/v1/index [post]
+func ting89(c *gin.Context) {
+
+	var param = &entity.BaseSetting{}
+	var pager = new(vo.Pager)
+	pager.PageNumber=1
+	pager.PageSize=20
+	res, _ := BaseSettingService.FindByPager(param,pager)
+
+	c.JSON(http.StatusOK, vo.Success(res))
+}
