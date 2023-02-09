@@ -6,12 +6,12 @@ github.com/CloudyKit/fastprinter
 github.com/CloudyKit/jet
 # github.com/EDDYCJY/fake-useragent v0.2.0
 github.com/EDDYCJY/fake-useragent
+github.com/EDDYCJY/fake-useragent/downloader
+github.com/EDDYCJY/fake-useragent/scheduler
 github.com/EDDYCJY/fake-useragent/setting
 github.com/EDDYCJY/fake-useragent/spiders
 github.com/EDDYCJY/fake-useragent/useragent
 github.com/EDDYCJY/fake-useragent/useragent/cache
-github.com/EDDYCJY/fake-useragent/downloader
-github.com/EDDYCJY/fake-useragent/scheduler
 # github.com/KyleBanks/depth v1.2.1
 github.com/KyleBanks/depth
 # github.com/PuerkitoBio/goquery v1.5.0
@@ -37,9 +37,10 @@ github.com/fatih/structs
 github.com/fsnotify/fsnotify
 # github.com/gin-contrib/sse v0.1.0
 github.com/gin-contrib/sse
-# github.com/gin-gonic/gin v1.4.0
+# github.com/gin-gonic/gin v1.7.7
 github.com/gin-gonic/gin
 github.com/gin-gonic/gin/binding
+github.com/gin-gonic/gin/internal/bytesconv
 github.com/gin-gonic/gin/internal/json
 github.com/gin-gonic/gin/render
 # github.com/go-openapi/jsonpointer v0.19.2
@@ -50,21 +51,30 @@ github.com/go-openapi/jsonreference
 github.com/go-openapi/spec
 # github.com/go-openapi/swag v0.19.5
 github.com/go-openapi/swag
+# github.com/go-playground/locales v0.13.0
+github.com/go-playground/locales
+github.com/go-playground/locales/currency
+# github.com/go-playground/universal-translator v0.17.0
+github.com/go-playground/universal-translator
+# github.com/go-playground/validator/v10 v10.4.1
+github.com/go-playground/validator/v10
 # github.com/go-sql-driver/mysql v1.4.1
 github.com/go-sql-driver/mysql
-# github.com/golang/protobuf v1.3.2
+# github.com/golang/protobuf v1.3.3
 github.com/golang/protobuf/proto
-# github.com/json-iterator/go v1.1.7
+# github.com/json-iterator/go v1.1.9
 github.com/json-iterator/go
 # github.com/jxfsuda/JsonParser v0.0.0-20190923031202-593c58ad90b4
 github.com/jxfsuda/JsonParser
 # github.com/kirinlabs/HttpRequest v0.1.5
 github.com/kirinlabs/HttpRequest
+# github.com/leodido/go-urn v1.2.0
+github.com/leodido/go-urn
 # github.com/mailru/easyjson v0.0.0-20190626092158-b2ccc519800e
+github.com/mailru/easyjson/buffer
 github.com/mailru/easyjson/jlexer
 github.com/mailru/easyjson/jwriter
-github.com/mailru/easyjson/buffer
-# github.com/mattn/go-isatty v0.0.9
+# github.com/mattn/go-isatty v0.0.12
 github.com/mattn/go-isatty
 # github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
 github.com/modern-go/concurrent
@@ -87,31 +97,38 @@ github.com/xormplus/builder
 github.com/xormplus/core
 # github.com/xormplus/xorm v0.0.0-20190827105519-9ce119234ab7
 github.com/xormplus/xorm
+# golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
+golang.org/x/crypto/sha3
 # golang.org/x/net v0.0.0-20190827160401-ba9fcec4b297
-golang.org/x/net/webdav
 golang.org/x/net/context
-golang.org/x/net/webdav/internal/xml
 golang.org/x/net/html
-golang.org/x/net/idna
 golang.org/x/net/html/atom
-# golang.org/x/sys v0.0.0-20190904154756-749cb33beabd
+golang.org/x/net/idna
+golang.org/x/net/webdav
+golang.org/x/net/webdav/internal/xml
+# golang.org/x/sys v0.0.0-20200116001909-b77594299b42
+golang.org/x/sys/cpu
 golang.org/x/sys/unix
 # golang.org/x/text v0.3.2
+golang.org/x/text/encoding
+golang.org/x/text/encoding/internal
+golang.org/x/text/encoding/internal/identifier
+golang.org/x/text/encoding/simplifiedchinese
+golang.org/x/text/secure/bidirule
+golang.org/x/text/transform
+golang.org/x/text/unicode/bidi
 golang.org/x/text/unicode/norm
 golang.org/x/text/width
-golang.org/x/text/secure/bidirule
-golang.org/x/text/unicode/bidi
-golang.org/x/text/transform
 # golang.org/x/tools v0.0.0-20190828213141-aed303cbaa74
-golang.org/x/tools/go/loader
 golang.org/x/tools/go/ast/astutil
 golang.org/x/tools/go/buildutil
 golang.org/x/tools/go/internal/cgo
+golang.org/x/tools/go/loader
 # google.golang.org/appengine v1.4.0
 google.golang.org/appengine/cloudsql
 # gopkg.in/flosch/pongo2.v3 v3.0.0-20141028000813-5e81b817a0c4
 gopkg.in/flosch/pongo2.v3
 # gopkg.in/go-playground/validator.v8 v8.18.2
 gopkg.in/go-playground/validator.v8
-# gopkg.in/yaml.v2 v2.2.2
+# gopkg.in/yaml.v2 v2.2.8
 gopkg.in/yaml.v2
