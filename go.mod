@@ -22,8 +22,6 @@ require (
 	github.com/json-iterator/go v1.1.7 // indirect
 	github.com/jxfsuda/JsonParser v0.0.0-20190923031202-593c58ad90b4
 	github.com/kirinlabs/HttpRequest v0.1.5
-	github.com/lxn/walk v0.0.0-20191001144247-31870cf268b0 // indirect
-	github.com/lxn/win v0.0.0-20190919090605-24c5960b03d8 // indirect
 	github.com/mailru/easyjson v0.0.0-20190626092158-b2ccc519800e // indirect
 	github.com/mattn/go-isatty v0.0.9 // indirect
 	github.com/pkg/errors v0.8.1
@@ -31,17 +29,12 @@ require (
 	github.com/swaggo/gin-swagger v1.2.0
 	github.com/swaggo/swag v1.6.2
 	github.com/tealeg/xlsx v1.0.3 // indirect
-	github.com/thinkerou/favicon v0.1.0 // indirect
 	github.com/ugorji/go v1.1.7 // indirect
 	github.com/xormplus/builder v0.0.0-20190724032102-0ee351fedce9 // indirect
 	github.com/xormplus/core v0.0.0-20190724072625-00f5a85ad6e0
 	github.com/xormplus/xorm v0.0.0-20190827105519-9ce119234ab7
-	github.com/zserge/webview v0.0.0-20190123072648-16c93bcaeaeb // indirect
-	golang.org/x/net v0.0.0-20190827160401-ba9fcec4b297 // indirect
-	golang.org/x/text v0.3.2
-	golang.org/x/tools v0.0.0-20190828213141-aed303cbaa74 // indirect
+	golang.org/x/text v0.3.8
 	google.golang.org/appengine v1.4.0 // indirect
-	gopkg.in/Knetic/govaluate.v3 v3.0.0 // indirect
 	gopkg.in/flosch/pongo2.v3 v3.0.0-20141028000813-5e81b817a0c4 // indirect
 	gopkg.in/go-playground/validator.v8 v8.18.2
 )
